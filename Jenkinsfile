@@ -5,8 +5,7 @@ node {
         
         def version = env.BRANCH_NAME
         if(env.BRANCH_NAME=="master") {
-            sh 'git describe --abbrev=0 --tags > tag'
-            version = readFile('tag').trim()
+            version = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
         }
         
         sh """
