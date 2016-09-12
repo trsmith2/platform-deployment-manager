@@ -9,6 +9,9 @@ node {
             version = readFile('tag').trim()
         }
         
+        echo env.BRANCH_NAME
+        echo version
+        
         sh '''
             
             echo $PWD
