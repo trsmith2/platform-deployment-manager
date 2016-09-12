@@ -5,6 +5,7 @@ node {
         
         def version = env.BRANCH_NAME
         if(env.BRANCH_NAME=="master") {
+            cd ${workspace}@script
             version = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
         }
         
