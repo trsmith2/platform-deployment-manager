@@ -15,7 +15,7 @@ node {
         sh '''
             echo $PWD
             echo $BRANCH_NAME
-            echo $v
+            echo ${v}
             cd $PWD@script/api;mvn versions:set -DnewVersion=${v}
             mvn clean package
         '''
