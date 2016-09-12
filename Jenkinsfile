@@ -1,11 +1,13 @@
 node {
     try {
         stage 'Build'
-        def workspace = pwd() 
         
+        def workspace = pwd() 
         def version = env.BRANCH_NAME
+
+        checkout scm
+
         if(env.BRANCH_NAME=="master") {
-            cd ${workspace}@script
             version = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
         }
         
