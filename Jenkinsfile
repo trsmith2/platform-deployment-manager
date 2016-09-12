@@ -3,20 +3,20 @@ node {
         stage 'Build'
         def workspace = pwd() 
         
-        def version = env.BRANCH_NAME
+        def v = env.BRANCH_NAME
         if(env.BRANCH_NAME=="master") {
             sh 'git describe --abbrev=0 --tags > tag'
-            version = readFile('tag').trim()
+            v = readFile('tag').trim()
         }
         
         echo env.BRANCH_NAME
-        echo version
+        echo v
         
         sh '''
-            
             echo $PWD
             echo $BRANCH_NAME
-            cd $PWD@script/api;mvn versions:set -DnewVersion=${version}
+            echo $v
+            cd $PWD@script/api;mvn versions:set -DnewVersion=${v}
             mvn clean package
         '''
 
