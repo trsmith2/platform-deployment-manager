@@ -12,14 +12,14 @@ node {
         }
         
         sh """
-            cd ${workspace}@script/api
-            mvn versions:set -DnewVersion=${version}
-            mvn clean package
+        cd api
+        mvn versions:set -DnewVersion=${version}
+        mvn clean package
         """
 
         stage 'Test'
         sh '''
-        cd $PWD@script/api/src/main/resources/; 
+        cd api/src/main/resources
         pylint_wrapper.py 10
         nosetests test_*.py
         '''
