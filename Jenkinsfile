@@ -12,13 +12,13 @@ node {
         echo env.BRANCH_NAME
         echo v
         
-        sh '''
+        sh """
             echo $PWD
             echo $BRANCH_NAME
             echo ${v}
             cd $PWD@script/api;mvn versions:set -DnewVersion=${v}
             mvn clean package
-        '''
+        """
 
         stage 'Test'
         sh '''
