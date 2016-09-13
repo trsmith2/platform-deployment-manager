@@ -9,7 +9,7 @@ node {
 
         if(env.BRANCH_NAME=="master") {
             version = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
-            checkout([$class: 'GitSCM', branches: [[name: "tags/${version}"]], extensions: [[$class: 'CleanCheckout'], [$class: 'LocalBranch', localBranch: "master"]]])
+            checkout([$class: 'GitSCM', branches: [[name: 'tags/${version}']], extensions: [[$class: 'CleanCheckout'], [$class: 'LocalBranch', localBranch: "master"]]])
         }
         
         sh """
