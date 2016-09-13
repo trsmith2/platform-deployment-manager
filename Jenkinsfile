@@ -1,23 +1,26 @@
 node {
     try {
         stage 'Build'
-        def workspace = pwd() 
         
+        def workspace = pwd() 
         def version = env.BRANCH_NAME
+
+        checkout scm
+
         if(env.BRANCH_NAME=="master") {
-            sh 'git describe --abbrev=0 --tags > tag'
-            version = readFile('tag').trim()
+            version = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
+            checkout([$class: 'GitSCM', branches: [[name: "tags/${version}"]], extensions: [[$class: 'CleanCheckout']]])
         }
         
         sh """
-            cd ${workspace}@script/api
-            mvn versions:set -DnewVersion=${version}
-            mvn clean package
+        cd api
+        mvn versions:set -DnewVersion=${version}
+        mvn clean package
         """
 
         stage 'Test'
         sh '''
-        cd $PWD@script/api/src/main/resources/; 
+        cd api/src/main/resources
         pylint_wrapper.py 10
         nosetests test_*.py
         '''
