@@ -11,7 +11,7 @@ node {
             version = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
         }
         
-        checkout([$class: 'GitSCM', branches: [[name: 'tags/']],
+        checkout([$class: 'GitSCM', branches: [[name: 'tags/0.1.0']],
         extensions: [[$class: 'CleanCheckout'],[$class: 'LocalBranch', localBranch: "master"]]])
 
         
